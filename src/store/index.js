@@ -6,11 +6,11 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    data: []
+    dataTable: []
   },
   mutations: {
     SET_DATA: (state, data) => {
-      state.data = data;
+      state.dataTable = data;
     }
   },
   actions: {

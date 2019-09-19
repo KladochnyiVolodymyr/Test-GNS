@@ -1,6 +1,13 @@
 <template>
   <div id="app">
-    <el-table :data="getDataTable">
+    <el-row type="flex" justify="space-between">
+      <el-col :span="9">
+        <SearchInput v-model="searchValue" />
+        {{searchValue}}
+      </el-col>
+      <el-col :span="3"></el-col>
+    </el-row>
+    <el-table :data="filteredTable">
       <el-table-column prop="id" label="ID"></el-table-column>
       <el-table-column prop="name" label="Name"></el-table-column>
       <el-table-column prop="location" label="Location"></el-table-column>
@@ -10,22 +17,29 @@
 </template>
 
 <script>
-/* import HelloWorld from './components/HelloWorld.vue' */
+import SearchInput from "./components/SearchInput";
 
 export default {
   name: "app",
   components: {
-    /* HelloWorld */
+    SearchInput
   },
   data() {
-    return {};
+    return {
+      searchValue: ""
+    };
   },
   mounted() {
     this.$store.dispatch("getData");
   },
   computed: {
     getDataTable() {
-      return this.$store.state.data;
+      return this.$store.state.dataTable;
+    },
+    filteredTable() {
+      return this.getDataTable.filter(item => {
+        return item.name.toLowerCase().includes(this.searchValue.toLowerCase());
+      });
     }
   }
 };
@@ -38,6 +52,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
