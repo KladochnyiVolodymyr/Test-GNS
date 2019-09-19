@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <el-table :data="tableData">
-      <el-table-column prop="date" label="ID"></el-table-column>
+    <el-table :data="getDataTable">
+      <el-table-column prop="id" label="ID"></el-table-column>
       <el-table-column prop="name" label="Name"></el-table-column>
-      <el-table-column prop="address" label="Location"></el-table-column>
+      <el-table-column prop="location" label="Location"></el-table-column>
       <el-table-column prop="currency" label="Currency"></el-table-column>
     </el-table>
   </div>
@@ -18,34 +18,15 @@ export default {
     /* HelloWorld */
   },
   data() {
-    return {
-      tableData: [
-        {
-          date: "2016-05-03",
-          name: "Tom",
-          address: "No. 189, Grove St, Los Angeles",
-          currency: "1"
-        },
-        {
-          date: "2016-05-02",
-          name: "Tom",
-          address: "No. 189, Grove St, Los Angeles",
-          currency: "1"
-        },
-        {
-          date: "2016-05-04",
-          name: "Tom",
-          address: "No. 189, Grove St, Los Angeles",
-          currency: "1"
-        },
-        {
-          date: "2016-05-01",
-          name: "Tom",
-          address: "No. 189, Grove St, Los Angeles",
-          currency: "1"
-        }
-      ]
-    };
+    return {};
+  },
+  mounted() {
+    this.$store.dispatch("getData");
+  },
+  computed: {
+    getDataTable() {
+      return this.$store.state.data;
+    }
   }
 };
 </script>
