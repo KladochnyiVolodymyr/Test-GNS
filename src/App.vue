@@ -3,9 +3,8 @@
     <el-row type="flex" justify="space-between">
       <el-col :span="9">
         <SearchInput v-model="searchValue" />
-        {{searchValue}}
       </el-col>
-      <el-col :span="3"></el-col>
+      <el-col :span="12">Total Currency: {{totalCurrency}}</el-col>
     </el-row>
     <el-table :data="filteredTable">
       <el-table-column prop="id" label="ID"></el-table-column>
@@ -40,6 +39,11 @@ export default {
       return this.getDataTable.filter(item => {
         return item.name.toLowerCase().includes(this.searchValue.toLowerCase());
       });
+    },
+    totalCurrency() {
+      return this.getDataTable.reduce(function(sum, current) {
+        return sum + current.currency;
+      }, 0);
     }
   }
 };
