@@ -6,7 +6,7 @@
       </el-col>
       <el-col :span="12">Total Currency: {{totalCurrency}}</el-col>
     </el-row>
-    <el-table :data="filteredTable" :default-sort="{prop: 'date', order: 'descending'}">
+    <el-table :data="filteredTable" :default-sort="{order: 'descending'}">
       <el-table-column prop="id" label="ID"></el-table-column>
       <el-table-column prop="name" label="Name" sortable></el-table-column>
       <el-table-column prop="location" label="Location" sortable></el-table-column>
