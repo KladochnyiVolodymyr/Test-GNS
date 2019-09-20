@@ -41,7 +41,7 @@ export default {
       });
     },
     totalCurrency() {
-      return this.getDataTable.reduce(function(sum, current) {
+      return this.filteredTable.reduce(function(sum, current) {
         return sum + current.currency;
       }, 0);
     }
