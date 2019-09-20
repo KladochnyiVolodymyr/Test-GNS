@@ -6,11 +6,11 @@
       </el-col>
       <el-col :span="12">Total Currency: {{totalCurrency}}</el-col>
     </el-row>
-    <el-table :data="filteredTable">
+    <el-table :data="filteredTable" :default-sort="{prop: 'date', order: 'descending'}">
       <el-table-column prop="id" label="ID"></el-table-column>
-      <el-table-column prop="name" label="Name"></el-table-column>
-      <el-table-column prop="location" label="Location"></el-table-column>
-      <el-table-column prop="currency" label="Currency"></el-table-column>
+      <el-table-column prop="name" label="Name" sortable></el-table-column>
+      <el-table-column prop="location" label="Location" sortable></el-table-column>
+      <el-table-column prop="currency" label="Currency" sortable></el-table-column>
     </el-table>
   </div>
 </template>
