@@ -2,15 +2,15 @@
   "testData": [
     {
       "id": "17d5653e-ab63-44cb-b1f6-403d9d7c48a0",
-      "name": "Twitterlist",
-      "location": "Namur",
-      "currency": 62675
+      "name": "test",
+      "location": "test",
+      "currency": "1111"
     },
     {
       "id": "9eee0e4e-d3a7-4a4c-aca8-00077164abf2",
-      "name": "Mydo",
-      "location": "Bojong",
-      "currency": 18917
+      "name": "test",
+      "location": "test",
+      "currency": "1122"
     },
     {
       "id": "6d3a7fd5-da98-4fc8-9818-c59ac9b15d36",

@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { getDataApi } from "../api/api";
+import { getDataApi, sendEditedData } from "../api/api";
 
 Vue.use(Vuex);
 
@@ -23,12 +23,25 @@ export default new Vuex.Store({
       state.currentItem.name = item.name;
       state.currentItem.location = item.location;
       state.currentItem.currency = item.currency;
+    },
+    UPD_DATA: (state, updItem) => {
+      state.dataTable = state.dataTable.map(item => {
+        if (item.id == updItem.id) {
+          return updItem;
+        } else {
+          return item;
+        }
+      });
     }
   },
   actions: {
     async getData({ commit }) {
       const { data } = await getDataApi();
       commit("SET_DATA", data);
+    },
+    async sendData({ commit }, item) {
+      let res = await sendEditedData(item);
+      commit("UPD_DATA", res.data);
     },
     getCurrentItem({ commit }, item) {
       commit("SET_CURRENT_ITEM", item);

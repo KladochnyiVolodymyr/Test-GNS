@@ -6,21 +6,41 @@
       </el-col>
       <el-col :span="12">Total Currency: {{totalCurrency}}</el-col>
     </el-row>
-    <el-table
-      :data="filteredTable"
-      :default-sort="{order: 'descending'}"
-      @current-change="handleCurrentChange"
-    >
-      <el-table-column prop="id" label="ID"></el-table-column>
-      <el-table-column prop="name" label="Name" sortable></el-table-column>
-      <el-table-column prop="location" label="Location" sortable></el-table-column>
-      <el-table-column prop="currency" label="Currency" sortable></el-table-column>
-      <el-table-column label="Edit">
-        <!-- <template slot-scope="scope">
-          <router-link :to="`/${scope.row.id}`">
-            <el-button type="primary" icon="el-icon-open" circle></el-button>
-          </router-link>
-        </template>-->
+    <el-table :data="filteredTable" :default-sort="{order: 'descending'}" @row-click="rowClick">
+      <el-table-column prop="id" label="ID" width="400"></el-table-column>
+      <el-table-column label="Name" sortable>
+        <template slot-scope="scope">
+          <span v-if="currentEditing.id !== scope.row.id">{{ scope.row.name }}</span>
+          <input v-model="currentEditing.name" v-else />
+        </template>
+      </el-table-column>
+      <el-table-column label="Location" sortable>
+        <template slot-scope="scope">
+          <span v-if="currentEditing.id !== scope.row.id">{{ scope.row.location }}</span>
+          <input v-model="currentEditing.location" v-else />
+        </template>
+      </el-table-column>
+      <el-table-column label="Currency" sortable>
+        <template slot-scope="scope">
+          <span v-if="currentEditing.id !== scope.row.id">{{ scope.row.currency }}</span>
+          <input v-model="currentEditing.currency" v-else />
+        </template>
+      </el-table-column>
+      <el-table-column width="100">
+        <template slot-scope="scope">
+          <el-button
+            type="success"
+            icon="el-icon-check"
+            circle
+            @click="send"
+            v-if="currentEditing.id == scope.row.id"
+          ></el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="Open" width="100">
+        <el-button type="primary" icon="el-icon-open" circle></el-button>
+      </el-table-column>
+      <el-table-column label="Edit" width="100">
         <el-button type="primary" icon="el-icon-edit" circle></el-button>
       </el-table-column>
     </el-table>
@@ -35,7 +55,13 @@ export default {
   },
   data() {
     return {
-      searchValue: ""
+      searchValue: "",
+      currentEditing: {
+        id: "",
+        name: "",
+        location: "",
+        currency: null
+      }
     };
   },
   mounted() {
@@ -57,12 +83,27 @@ export default {
     }
   },
   methods: {
-    handleCurrentChange(val) {
-      this.$store.dispatch("getCurrentItem", val);
-      this.$router.push(`/${val.id}`);
+    rowClick(row, event) {
+      if (event.label == "Open") {
+        this.$store.dispatch("getCurrentItem", row);
+        this.$router.push(`/${row.id}`);
+      } else if (event.label == "Edit") {
+        this.currentEditing.id = row.id;
+        this.currentEditing.name = row.name;
+        this.currentEditing.location = row.location;
+        this.currentEditing.currency = row.currency;
+      }
+    },
+    send() {
+      this.$store.dispatch("sendData", this.currentEditing);
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+.el-table {
+  tr {
+    cursor: pointer;
+  }
+}
 </style>
