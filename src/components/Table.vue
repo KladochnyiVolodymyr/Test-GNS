@@ -26,13 +26,12 @@
           <input v-model="currentEditing.currency" v-else />
         </template>
       </el-table-column>
-      <el-table-column width="100">
+      <el-table-column label width="100">
         <template slot-scope="scope">
           <el-button
             type="success"
             icon="el-icon-check"
             circle
-            @click="send"
             v-if="currentEditing.id == scope.row.id"
           ></el-button>
         </template>
@@ -92,10 +91,10 @@ export default {
         this.currentEditing.name = row.name;
         this.currentEditing.location = row.location;
         this.currentEditing.currency = row.currency;
+      } else if (event.label == "") {
+        this.$store.dispatch("sendData", this.currentEditing);
+        this.currentEditing.id = "";
       }
-    },
-    send() {
-      this.$store.dispatch("sendData", this.currentEditing);
     }
   }
 };
