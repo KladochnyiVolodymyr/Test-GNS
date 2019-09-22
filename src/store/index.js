@@ -19,10 +19,7 @@ export default new Vuex.Store({
       state.dataTable = data;
     },
     SET_CURRENT_ITEM: (state, item) => {
-      state.currentItem.id = item.id;
-      state.currentItem.name = item.name;
-      state.currentItem.location = item.location;
-      state.currentItem.currency = item.currency;
+      state.currentItem = { ...item };
     },
     UPD_DATA: (state, updItem) => {
       state.dataTable = state.dataTable.map(item => {
@@ -40,8 +37,8 @@ export default new Vuex.Store({
       commit("SET_DATA", data);
     },
     async sendData({ commit }, item) {
-      let res = await sendEditedData(item);
-      commit("UPD_DATA", res.data);
+      const { data } = await sendEditedData(item);
+      commit("UPD_DATA", data);
     },
     getCurrentItem({ commit }, item) {
       commit("SET_CURRENT_ITEM", item);

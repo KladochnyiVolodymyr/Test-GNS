@@ -7,7 +7,6 @@
       <el-col :span="12">Total Currency: {{totalCurrency}}</el-col>
     </el-row>
     <el-table :data="filteredTable" :default-sort="{order: 'descending'}" @row-click="rowClick">
-      <el-table-column prop="id" label="ID" width="400"></el-table-column>
       <el-table-column label="Name" sortable>
         <template slot-scope="scope">
           <span v-if="currentEditing.id !== scope.row.id">{{ scope.row.name }}</span>
@@ -87,10 +86,7 @@ export default {
         this.$store.dispatch("getCurrentItem", row);
         this.$router.push(`/${row.id}`);
       } else if (event.label == "Edit") {
-        this.currentEditing.id = row.id;
-        this.currentEditing.name = row.name;
-        this.currentEditing.location = row.location;
-        this.currentEditing.currency = row.currency;
+        this.currentEditing = { ...row };
       } else if (event.label == "") {
         this.$store.dispatch("sendData", this.currentEditing);
         this.currentEditing.id = "";
@@ -99,10 +95,9 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
-.el-table {
-  tr {
-    cursor: pointer;
-  }
+<style lang="scss">
+.el-table .cell,
+.el-table th div {
+  text-overflow: initial;
 }
 </style>
