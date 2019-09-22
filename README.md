@@ -1,29 +1,19 @@
 # test-gns
 
 ## Project setup
+
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+## Run Frontend
+
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Run dev Backend
 
-### Run your tests
 ```
-npm run test
+npm run dev-server
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
