@@ -1,5 +1,10 @@
 <template>
-  <input @input="$emit('input', $event.target.value)" type="text" class="search-input" />
+  <input
+    @input="$emit('input', $event.target.value)"
+    type="text"
+    class="search-input"
+    placeholder="Search"
+  />
 </template>
 <script>
 export default {};

@@ -79,7 +79,9 @@
       <el-table-column label="Edit" width="100">
         <el-button type="primary" icon="el-icon-edit" circle></el-button>
       </el-table-column>
+      <template slot="empty">Your search did not match any results</template>
     </el-table>
+    <div class="loading" v-if="loading">Loading...</div>
   </div>
 </template>
 <script>
@@ -122,6 +124,9 @@ export default {
     getDataTable() {
       return this.$store.state.dataTable;
     },
+    loading() {
+      return this.$store.state.loading;
+    },
     filteredTable() {
       return this.getDataTable.filter(item => {
         return item.name.toLowerCase().includes(this.searchValue.toLowerCase());
@@ -142,7 +147,7 @@ export default {
         this.currentEditing = { ...row };
       } else if (event.label == "") {
         if (!this.$v.$invalid) {
-          this.currentEditing.currency = Number(this.currentEditing.currency);
+          this.currentEditing.currency = +this.currentEditing.currency;
           this.$store.dispatch("sendData", this.currentEditing);
           this.currentEditing.id = "";
         }
@@ -172,5 +177,17 @@ export default {
     margin: 0;
     position: absolute;
   }
+}
+.loading {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
 }
 </style>

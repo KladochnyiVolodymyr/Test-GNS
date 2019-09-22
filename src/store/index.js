@@ -12,7 +12,8 @@ export default new Vuex.Store({
       name: "",
       location: "",
       currency: null
-    }
+    },
+    loading: false
   },
   mutations: {
     SET_DATA: (state, data) => {
@@ -29,12 +30,17 @@ export default new Vuex.Store({
           return item;
         }
       });
+    },
+    SET_LOADING: (state, loading) => {
+      state.loading = loading;
     }
   },
   actions: {
     async getData({ commit }) {
+      commit("SET_LOADING", true);
       const { data } = await getDataApi();
       commit("SET_DATA", data);
+      commit("SET_LOADING", false);
     },
     async sendData({ commit }, item) {
       const { data } = await sendEditedData(item);
