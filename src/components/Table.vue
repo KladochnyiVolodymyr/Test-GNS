@@ -10,19 +10,56 @@
       <el-table-column label="Name" sortable>
         <template slot-scope="scope">
           <span v-if="currentEditing.id !== scope.row.id">{{ scope.row.name }}</span>
-          <input v-model="currentEditing.name" v-else />
+          <div class="input" v-else>
+            <input
+              v-model="currentEditing.name"
+              @blur="$v.currentEditing.name.$touch()"
+              id="name"
+              :class="{error: $v.currentEditing.name.$error}"
+            />
+            <p
+              class="input__error-text"
+              v-if="!$v.currentEditing.name.required"
+            >Name field is required</p>
+          </div>
         </template>
       </el-table-column>
       <el-table-column label="Location" sortable>
         <template slot-scope="scope">
           <span v-if="currentEditing.id !== scope.row.id">{{ scope.row.location }}</span>
-          <input v-model="currentEditing.location" v-else />
+          <div class="input" v-else>
+            <input
+              v-model="currentEditing.location"
+              @blur="$v.currentEditing.location.$touch()"
+              id="location"
+              :class="{error: $v.currentEditing.location.$error}"
+            />
+            <p
+              class="input__error-text"
+              v-if="!$v.currentEditing.location.required"
+            >Location field is required</p>
+          </div>
         </template>
       </el-table-column>
       <el-table-column label="Currency" sortable>
         <template slot-scope="scope">
           <span v-if="currentEditing.id !== scope.row.id">{{ scope.row.currency }}</span>
-          <input v-model="currentEditing.currency" v-else />
+          <div class="input" v-else>
+            <input
+              v-model="currentEditing.currency"
+              @blur="$v.currentEditing.currency.$touch()"
+              id="currency"
+              :class="{error: $v.currentEditing.currency.$error}"
+            />
+            <p
+              class="input__error-text"
+              v-if="!$v.currentEditing.currency.required"
+            >Currency field is required</p>
+            <p
+              class="input__error-text"
+              v-if="!$v.currentEditing.currency.numeric"
+            >Currency field should be a number</p>
+          </div>
         </template>
       </el-table-column>
       <el-table-column label width="100">
@@ -32,6 +69,7 @@
             icon="el-icon-check"
             circle
             v-if="currentEditing.id == scope.row.id"
+            :disabled="$v.$invalid"
           ></el-button>
         </template>
       </el-table-column>
@@ -46,6 +84,7 @@
 </template>
 <script>
 import SearchInput from "./SearchInput";
+import { required, numeric } from "vuelidate/lib/validators";
 
 export default {
   components: {
@@ -61,6 +100,20 @@ export default {
         currency: null
       }
     };
+  },
+  validations: {
+    currentEditing: {
+      name: {
+        required
+      },
+      location: {
+        required
+      },
+      currency: {
+        required,
+        numeric
+      }
+    }
   },
   mounted() {
     this.$store.dispatch("getData");
@@ -88,8 +141,10 @@ export default {
       } else if (event.label == "Edit") {
         this.currentEditing = { ...row };
       } else if (event.label == "") {
-        this.$store.dispatch("sendData", this.currentEditing);
-        this.currentEditing.id = "";
+        if (!this.$v.$invalid) {
+          this.$store.dispatch("sendData", this.currentEditing);
+          this.currentEditing.id = "";
+        }
       }
     }
   }
@@ -99,5 +154,22 @@ export default {
 .el-table .cell,
 .el-table th div {
   text-overflow: initial;
+}
+.input {
+  input {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    padding: 5px 10px;
+    &.error {
+      border-color: red;
+    }
+  }
+  &__error-text {
+    color: red;
+    font-size: 12px;
+    margin: 0;
+    position: absolute;
+  }
 }
 </style>
