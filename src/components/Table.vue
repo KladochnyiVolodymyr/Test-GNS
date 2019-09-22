@@ -129,7 +129,7 @@ export default {
     },
     totalCurrency() {
       return this.filteredTable.reduce(function(sum, current) {
-        return sum + current.currency;
+        return sum + +current.currency;
       }, 0);
     }
   },
@@ -142,6 +142,7 @@ export default {
         this.currentEditing = { ...row };
       } else if (event.label == "") {
         if (!this.$v.$invalid) {
+          this.currentEditing.currency = Number(this.currentEditing.currency);
           this.$store.dispatch("sendData", this.currentEditing);
           this.currentEditing.id = "";
         }
