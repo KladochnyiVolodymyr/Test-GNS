@@ -17,9 +17,3 @@ npm run serve
 ```
 http://localhost:8080/
 ```
-
-## Run dev Backend
-
-```
-npm run dev-server
-```
