@@ -7,7 +7,7 @@
       <el-col :span="12">Total Currency: {{totalCurrency}}</el-col>
     </el-row>
     <el-table :data="filteredTable" :default-sort="{order: 'descending'}" @row-click="rowClick">
-      <el-table-column label="Name" sortable>
+      <el-table-column label="Name" prop="name" sortable>
         <template slot-scope="scope">
           <span v-if="currentEditing.id !== scope.row.id">{{ scope.row.name }}</span>
           <div class="input" v-else>
@@ -24,7 +24,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="Location" sortable>
+      <el-table-column label="Location" prop="location" sortable>
         <template slot-scope="scope">
           <span v-if="currentEditing.id !== scope.row.id">{{ scope.row.location }}</span>
           <div class="input" v-else>
@@ -41,7 +41,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="Currency" sortable>
+      <el-table-column label="Currency" prop="currency" sortable>
         <template slot-scope="scope">
           <span v-if="currentEditing.id !== scope.row.id">{{ scope.row.currency }}</span>
           <div class="input" v-else>
