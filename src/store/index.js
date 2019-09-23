@@ -17,7 +17,7 @@ export default new Vuex.Store({
   },
   mutations: {
     SET_DATA: (state, data) => {
-      state.dataTable = data;
+      state.dataTable = [...data];
     },
     SET_CURRENT_ITEM: (state, item) => {
       state.currentItem = { ...item };

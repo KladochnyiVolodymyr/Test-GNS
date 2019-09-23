@@ -1,10 +1,22 @@
-import axios from "axios";
+import data from "./db";
 
-const apiUrl = "http://localhost:3000/testData";
+var dataArray = [...data];
 
 export function getDataApi() {
-  return axios.get(apiUrl);
+  return new Promise(resolve => {
+    resolve({ data: [...dataArray] });
+  });
 }
-export function sendEditedData(item) {
-  return axios.put(apiUrl + `/${item.id}`, item);
+export function sendEditedData(updItem) {
+  let updatedItem = { ...updItem };
+  dataArray = dataArray.map(item => {
+    if (item.id == updatedItem.id) {
+      return updatedItem;
+    } else {
+      return item;
+    }
+  });
+  return new Promise(resolve => {
+    resolve({ data: updatedItem });
+  });
 }
