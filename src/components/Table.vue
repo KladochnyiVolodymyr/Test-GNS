@@ -7,7 +7,12 @@
       <el-col :span="12">Total Currency: {{totalCurrency}}</el-col>
     </el-row>
     <el-table :data="filteredTable" :default-sort="{order: 'descending'}" @row-click="rowClick">
-      <el-table-column label="Name" prop="name" sortable>
+      <el-table-column
+        label="Name"
+        prop="name"
+        sortable
+        :sort-method="(a, b) => stringSort(a, b, 'name') "
+      >
         <template slot-scope="scope">
           <span v-if="currentEditing.id !== scope.row.id">{{ scope.row.name }}</span>
           <div class="input" v-else>
@@ -24,7 +29,12 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="Location" prop="location" sortable>
+      <el-table-column
+        label="Location"
+        prop="location"
+        sortable
+        :sort-method="(a, b) => stringSort(a, b, 'location') "
+      >
         <template slot-scope="scope">
           <span v-if="currentEditing.id !== scope.row.id">{{ scope.row.location }}</span>
           <div class="input" v-else>
@@ -152,6 +162,14 @@ export default {
           this.currentEditing.id = "";
         }
       }
+    },
+    stringSort(a, b, prop) {
+      let pa = a[prop].toLowerCase();
+      let pb = b[prop].toLowerCase();
+      return pa > pb ? -1 : pb > pa ? 1 : 0;
+    },
+    numberSort(a, b, prop) {
+      return +a[prop] - +b[prop];
     }
   }
 };

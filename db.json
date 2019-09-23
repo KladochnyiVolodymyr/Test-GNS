@@ -4,13 +4,13 @@
       "id": "17d5653e-ab63-44cb-b1f6-403d9d7c48a0",
       "name": "test",
       "location": "test",
-      "currency": 1
+      "currency": 111
     },
     {
       "id": "9eee0e4e-d3a7-4a4c-aca8-00077164abf2",
-      "name": "test",
+      "name": "tast",
       "location": "test",
-      "currency": 2
+      "currency": 211111
     },
     {
       "id": "6d3a7fd5-da98-4fc8-9818-c59ac9b15d36",
@@ -872,7 +872,7 @@
     },
     {
       "id": "13b19d61-c193-4440-aff6-67a9103ea18d",
-      "name": "Zoovu",
+      "name": "zoovu",
       "location": "Juanshui",
       "currency": 30588
     },
